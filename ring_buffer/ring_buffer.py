@@ -8,19 +8,35 @@ class RingBuffer:
         self.storage = DoublyLinkedList()
 
     def append(self, item):
-        # If the ring is full, remove oldest, add new
         if self.capacity == self.storage.length:
-            self.storage.remove_from_tail()
-            self.storage.add_to_head(item)
+            if not self.current:
+                self.current = self.storage.head
+
+            if self.current.value == self.storage.head.value:
+                self.storage.remove_from_head()
+                self.storage.add_to_head(item)
+                self.current = self.current.next
+            else:
+                self.current.insert_after(item)
+                if self.current.next.next:
+                    new_current = self.current.next.next
+                else:
+                    new_current = self.storage.head
+                self.storage.delete(self.current)
+                self.storage.length += 1
+                self.current = new_current
         else:
-            self.storage.add_to_head(item)
+            self.storage.add_to_tail(item)
 
     def get(self):
-        # Note:  This is the only [] allowed
         list_buffer_contents = []
 
-        # TODO: Your code here
-
+        node = self.storage.head
+        
+        while node:
+            list_buffer_contents.append(node.value)
+            node = node.next
+        
         return list_buffer_contents
 
 # ----------------Stretch Goal-------------------
@@ -36,12 +52,7 @@ class ArrayRingBuffer:
     def get(self):
         pass
 
-buffer = RingBuffer(5)
-print(buffer.storage.length)
-buffer.append('a')
-buffer.append('b')
-buffer.append('c')
-buffer.append('d')
-buffer.append('e')
-buffer.append('f')
-print(buffer.storage.length)
+# buffer = RingBuffer(5)
+# for i in range(28):
+#     buffer.append(i)
+# print(buffer.get())
