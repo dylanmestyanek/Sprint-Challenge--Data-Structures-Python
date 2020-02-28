@@ -13,12 +13,19 @@ f.close()
 duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
-names_1.sort()
-names_2.sort()
+
+# ===== STRETCH SOLUTION =====
+# names_1 = set(names_1)
+# names_2 = set(names_2)
+# ===== STRETCH SOLUTION =====
+
 for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+    if name_1 in names_2:
+        duplicates.append(name_1)
+
+# ORIGINAL: 8.507248640060425 seconds
+# NEW: 1.2948925495147705 seconds
+# STRETCH: 0.008977413177490234 seconds
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
