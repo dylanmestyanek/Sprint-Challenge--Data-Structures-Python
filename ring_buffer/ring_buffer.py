@@ -52,7 +52,7 @@ class ArrayRingBuffer:
     def get(self):
         pass
 
-# buffer = RingBuffer(5)
-# for i in range(28):
-#     buffer.append(i)
-# print(buffer.get())
+buffer = RingBuffer(5)
+for i in range(22):
+    buffer.append(i)
+print(buffer.get())
